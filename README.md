@@ -69,8 +69,14 @@ This includes linting as well as image, script, stylesheet and HTML optimization
 
 
 ## References & Credits
-- [Google Web Starter Kit](https://developers.google.com/web/tools/starter-kit/)
-- [Google Maps API](https://developers.google.com/maps/documentation/javascript/)
-- [Iconfinder.com](https://www.iconfinder.com/)
-- [Underscore.js](http://underscorejs.org/)
-- [Knockout.js](http://knockoutjs.com/)
+- Base project configuration from [Google Web Starter Kit](https://developers.google.com/web/tools/starter-kit/)
+- Icon mashed up from the following icons:
+  - https://www.iconfinder.com/icons/37950/alcohol_cocktail_icon
+  - https://www.iconfinder.com/icons/58512/cocktail_drink_icon
+- APIs used:
+  - [Google Maps API](https://developers.google.com/maps/documentation/javascript/)
+  - [FourSquare API](https://developer.foursquare.com/)
+- JavaScript Libraries used:
+  - [Underscore.js](http://underscorejs.org/)
+  - [Knockout.js](http://knockoutjs.com/)
+  - [jQuery](http://jquery.com/)
