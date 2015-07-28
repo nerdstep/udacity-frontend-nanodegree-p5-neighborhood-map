@@ -4,6 +4,8 @@ This project is a single page web application which displays a Google map with a
 filterable list of map markers showing Speakeasy-style cocktail bars in the 
 London area.
 
+### [View Project](http://nerdstep.github.io/udacity-project5/dist/)
+
 ## Install
 
 **tl;dr**: Clone this repo and run `$ npm install` in that directory to get 
