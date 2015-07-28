@@ -1,10 +1,13 @@
 # Udacity Project 5: Neighborhood Map
 
-This project is a single page web application which displays a Google map with a filterable list of map markers showing Speakeasy-style cocktail bars in the London area.
+This project is a single page web application which displays a Google map with a 
+filterable list of map markers showing Speakeasy-style cocktail bars in the 
+London area.
 
 ## Install
 
-**tl;dr**: Clone this repo and run `$ npm install` in that directory to get started.
+**tl;dr**: Clone this repo and run `$ npm install` in that directory to get 
+everything setup. The run `$gulp serve` to run the project locally.
 
 -
 
@@ -39,7 +42,7 @@ Next, install the dependencies:
 $ npm install
 ```
 
-That's it! You should now have everything needed to use the Web Starter Kit.
+That's it! You should now have everything needed to run the project.
 
 -
 
