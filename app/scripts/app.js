@@ -1,3 +1,8 @@
+/**
+ * Main application script
+ * Author: Justin Williams @jwilliams42
+ */
+
 (function () {
   'use strict';
 
@@ -51,23 +56,6 @@
   }];
 
 
-  // get a list of unique area names
-  var areas = _.chain(places).pluck('area').unique().sortBy().value();
-  areas.unshift('All');
-
-  // create a new Google map
-  var map = createMap(center.lat, center.lng);
-
-  // This creates a new instance of a Google map
-  function createMap(lat, lng){
-    var mapOptions = {
-      zoom: 13,
-      center: { lat: lat, lng: lng },
-      mapTypeId: 'terrain'
-    };
-    return new google.maps.Map($('#map-canvas')[0], mapOptions);
-  }
-
   // This function queries the FourSquare API to retrieve venue information
   // it caches the response in localStorage so we don't hit the API too often
   // NOTE: Yes, unfortunately we are exposing our secret API key here;
@@ -91,26 +79,33 @@
             store.setItem(venueId, JSON.stringify(res.response.venue));
           }
           callback(res.response.venue);
+        } else {
+          // handle response other than 200
+          console.log('Oops, looks like something went wrong.', res);
+          alert('FourSquare API Error: ' + res.meta.code + ' (see console output)');
         }
+      }).fail(function(jqXHR, textStatus, error) {
+        console.log('AJAX Error', jqXHR, textStatus, error);
+        alert('Ajax Request Failed: ' + textStatus)
       });
     }
   }
 
 
-  var Marker = function Marker(obj) {
+  var Marker = function Marker(obj, map) {
     var _this = this;
     var marker, infowindow;
 
     //console.log(obj);
 
-    this.name = ko.observable(obj.name);
-    this.desc = ko.observable(obj.desc);
-    this.area = ko.observable(obj.area);
-    this.lat  = ko.observable(obj.lat);
-    this.lng  = ko.observable(obj.lng);
-    this.venueId = ko.observable(obj.venueId);
+    _this.name = ko.observable(obj.name);
+    _this.desc = ko.observable(obj.desc);
+    _this.area = ko.observable(obj.area);
+    _this.lat  = ko.observable(obj.lat);
+    _this.lng  = ko.observable(obj.lng);
+    _this.venueId = ko.observable(obj.venueId);
 
-    this.removeMarker = function () {
+    _this.removeMarker = function () {
       marker.setMap(null);
     };
 
@@ -155,25 +150,39 @@
   function MapViewModel(places) {
     var _this = this;
 
-    this.areas = ko.observableArray(areas);
-    this.markers = ko.observableArray([]);
+    // get a list of unique area names
+    var areas = _.chain(places).pluck('area').unique().sortBy().value();
+    areas.unshift('All');
+
+    _this.areas = ko.observableArray(areas);
+    _this.markers = ko.observableArray();
+
+    // This creates a new instance of a Google map
+    _this.createMap = function (lat, lng) {
+      var mapOptions = {
+        zoom: 13,
+        center: { lat: lat, lng: lng },
+        mapTypeId: 'terrain'
+      };
+      return new google.maps.Map($('#map-canvas')[0], mapOptions);
+    };
 
     // This function adds a new map marker model to the map
-    this.addMarker = function (item) {
-      _this.markers.push(new Marker(item));
+    _this.addMarker = function (item) {
+      _this.markers.push(new Marker(item, _this.map));
     };
 
     // This function adds a list of places as markers to the map
-    this.addMarkers = function (list) {
+    _this.addMarkers = function (list) {
       list = list || [];
 
       _.each(list, function (item, i) {
-        _.delay(this.addMarker, i * 100, item);
-      }, this);
+        _.delay(_this.addMarker, i * 100, item);
+      });
     };
 
     // This function removes all of the current markers on the map
-    this.removeMarkers = function () {
+    _this.removeMarkers = function () {
       console.log('removeMarkers');
 
       _.each(_this.markers(), function (marker) {
@@ -186,7 +195,7 @@
     };
 
     // filter our places list for values that match a given area name
-    this.filter = function (area) {
+    _this.filter = function (area) {
       var list = [];
       //console.log('filter', area);
 
@@ -208,7 +217,10 @@
       }
     };
 
-    this.addMarkers(places);
+    // create a new Google map
+    _this.map = _this.createMap(center.lat, center.lng);
+
+    _this.addMarkers(places);
   }
 
   ko.applyBindings(new MapViewModel(places));
