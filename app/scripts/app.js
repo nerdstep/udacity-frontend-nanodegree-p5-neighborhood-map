@@ -86,7 +86,7 @@
         }
       }).fail(function(jqXHR, textStatus, error) {
         console.log('AJAX Error', jqXHR, textStatus, error);
-        alert('Ajax Request Failed: ' + textStatus)
+        alert('Ajax Request Failed: ' + textStatus);
       });
     }
   }
@@ -94,7 +94,7 @@
 
   var Marker = function Marker(obj, map) {
     var _this = this;
-    var marker, infowindow;
+    var infowindow;
 
     //console.log(obj);
 
@@ -106,10 +106,10 @@
     _this.venueId = ko.observable(obj.venueId);
 
     _this.removeMarker = function () {
-      marker.setMap(null);
+      _this.marker.setMap(null);
     };
 
-    marker = new google.maps.Marker({
+    _this.marker = new google.maps.Marker({
       position: new google.maps.LatLng(obj.lat, obj.lng),
       animation: google.maps.Animation.DROP,
       title: obj.name,
@@ -117,7 +117,7 @@
       map: map
     });
 
-    google.maps.event.addListener(marker, 'click', function() {
+    google.maps.event.addListener(_this.marker, 'click', function() {
       // if a previous info window was set then close it first
       if (prevInfoWindow) {
         prevInfoWindow.close();
@@ -137,7 +137,10 @@
           });
         }
 
-        infowindow.open(map, marker);
+        // center map on marker
+        map.setCenter(_this.marker.getPosition()); // setCenter takes a LatLng object
+
+        infowindow.open(map, _this.marker);
 
         // remember this info window as the prev info window
         prevInfoWindow = infowindow;
@@ -179,19 +182,26 @@
       _.each(list, function (item, i) {
         _.delay(_this.addMarker, i * 100, item);
       });
+
+      // get the first marker from the array and center on it
+      // this way each time an area is selected we are centered on the map
+      _.defer(function () {
+        var m = _this.markers()[0];
+        if (m) {
+          _this.map.setCenter(m.marker.getPosition());
+        }
+      });
     };
 
     // This function removes all of the current markers on the map
     _this.removeMarkers = function () {
-      console.log('removeMarkers');
-
       _.each(_this.markers(), function (marker) {
         marker.removeMarker();
       });
 
       _this.markers.removeAll();
 
-      google.maps.event.clearListeners(map, 'bounds_changed');
+      google.maps.event.clearListeners(_this.map, 'bounds_changed');
     };
 
     // filter our places list for values that match a given area name
