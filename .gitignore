@@ -1,0 +1,7 @@
+node_modules
+dist
+.tmp
+app.yaml
+.idea
+bower_components
+psd

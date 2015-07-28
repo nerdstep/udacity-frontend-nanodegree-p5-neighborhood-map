@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "name": "Udacity Project 5: Neighborhood Map",
+  "launch_path": "/index.html",
+  "description": "A single page web application.",
+  "icons": {
+    "128": "/images/touch/icon-128x128.png"
+  },
+  "developer": {
+    "name": "Justin Williams",
+    "url": "http://www.github.com/nerdstep"
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "default_locale": "en",
+  "permissions": {
+  },
+  "locales": {
+    "en": {
+      "name": "Udacity Project 5: Neighborhood Map",
+      "description": "A single page web application."
+    }
+  }
+}

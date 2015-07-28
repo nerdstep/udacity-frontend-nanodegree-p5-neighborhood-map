@@ -1,0 +1,31 @@
+{
+  "name": "Project 5",
+  "version": "1.0.0",
+  "authors": [
+    "Justin Williams <justinwilliams42@gmail.com>"
+  ],
+  "description": "Udacity Front-End Web Developer Nanodegree Project 5: Neighborhood Map Project",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "Udacity",
+    "Nanodegree",
+    "Google",
+    "Maps"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/scripts/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "knockout": "~3.3.0",
+    "underscore": "~1.8.3"
+  }
+}
