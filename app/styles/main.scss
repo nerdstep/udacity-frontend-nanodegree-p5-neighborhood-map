@@ -18,3 +18,13 @@
 .img-circle {
   border-radius: 50%;
 }
+
+.desktop-only {
+  display: none !important;
+}
+
+@media (min-width:992px) {
+  .desktop-only {
+    display: block !important;
+  }
+}
