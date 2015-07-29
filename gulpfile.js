@@ -120,10 +120,7 @@ gulp.task('scripts', function () {
 
 // Concatenate and vendor JavaScript
 gulp.task('scripts:vendor', function () {
-  var sources = [
-    './app/scripts/vendor/jquery/dist/jquery.min.js',
-    './app/scripts/vendor/knockout/dist/knockout.js'
-  ];
+  var sources = ['./app/scripts/vendor/**/*.js'];
   return gulp.src(sources)
     .pipe($.concat('vendor.min.js'))
     .pipe($.uglify())
